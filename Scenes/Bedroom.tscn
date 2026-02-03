@@ -1,0 +1,129 @@
+[gd_scene load_steps=11 format=3 uid="uid://bkq7ym5hxwc8r"]
+
+[ext_resource type="Script" path="res://Scripts/Game/BedroomScene.cs" id="1_bedroom"]
+[ext_resource type="PackedScene" uid="uid://c7vjx8hk5mwab" path="res://Scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://d3jxf5r8hjfvt" path="res://Scenes/UI/DialogSystem.tscn" id="3_dialog"]
+[ext_resource type="Script" path="res://Scripts/Interactables/ItemPickup.cs" id="4_item"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(640, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_left"]
+size = Vector2(240, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_right"]
+size = Vector2(240, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(80, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(16, 360)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_item"]
+radius = 16.0
+
+[node name="Bedroom" type="Node2D"]
+script = ExtResource("1_bedroom")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.25, 0.2, 0.15, 1)
+
+[node name="CurtainOverlay" type="ColorRect" parent="."]
+z_index = 100
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 0.85)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 8)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="WallBottomLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(120, 352)
+shape = SubResource("RectangleShape2D_wall_bottom_left")
+
+[node name="WallBottomRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(520, 352)
+shape = SubResource("RectangleShape2D_wall_bottom_right")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(8, 180)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(632, 180)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="Bed" type="ColorRect" parent="."]
+offset_left = 420.0
+offset_top = 60.0
+offset_right = 540.0
+offset_bottom = 140.0
+color = Color(0.6, 0.4, 0.3, 1)
+
+[node name="BedLabel" type="Label" parent="Bed"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 56.0
+text = "ベッド"
+
+[node name="WaterItem" type="Area2D" parent="."]
+position = Vector2(120, 200)
+script = ExtResource("4_item")
+ItemName = "水"
+PickupMessage = "を手に入れた"
+
+[node name="Visual" type="ColorRect" parent="WaterItem"]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.3, 0.5, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterItem"]
+shape = SubResource("CircleShape2D_item")
+
+[node name="PromptLabel" type="Label" parent="WaterItem"]
+visible = false
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+horizontal_alignment = 1
+text = "拾う"
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2(320, 330)
+monitoring = true
+
+[node name="Visual" type="ColorRect" parent="Door"]
+offset_left = -40.0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+color = Color(0.5, 0.35, 0.2, 1)
+
+[node name="DoorLabel" type="Label" parent="Door"]
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -20.0
+horizontal_alignment = 1
+text = "出口"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+shape = SubResource("RectangleShape2D_door")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(320, 180)
+
+[node name="DialogSystem" parent="." instance=ExtResource("3_dialog")]
+
+[connection signal="body_entered" from="Door" to="." method="OnDoorInteracted"]

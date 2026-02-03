@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3jxf5r8hjfvt"]
+
+[ext_resource type="Script" path="res://Scripts/Core/DialogSystem.cs" id="1_dialog"]
+
+[node name="DialogSystem" type="CanvasLayer"]
+script = ExtResource("1_dialog")
+
+[node name="DialogBox" type="Panel" parent="."]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -120.0
+offset_right = -32.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NameLabel" type="Label" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.3
+offset_left = 16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 0.0
+text = "名前"
+
+[node name="TextLabel" type="Label" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+text = "テキストがここに表示されます。"
+autowrap_mode = 2

@@ -1,0 +1,136 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqx8rm5vjkqwh"]
+
+[ext_resource type="Script" path="res://Scripts/Game/DesertScene.cs" id="1_desert"]
+[ext_resource type="PackedScene" uid="uid://c7vjx8hk5mwab" path="res://Scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://d3jxf5r8hjfvt" path="res://Scenes/UI/DialogSystem.tscn" id="3_dialog"]
+[ext_resource type="Script" path="res://Scripts/Interactables/ItemPickup.cs" id="4_item"]
+[ext_resource type="Script" path="res://Scripts/Interactables/PlantSpot.cs" id="5_plant"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_item"]
+radius = 16.0
+
+[node name="Desert" type="Node2D"]
+script = ExtResource("1_desert")
+WorldEndTime = 30.0
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.85, 0.75, 0.55, 1)
+
+[node name="Sun" type="ColorRect" parent="."]
+offset_left = 520.0
+offset_top = 30.0
+offset_right = 600.0
+offset_bottom = 110.0
+color = Color(1, 0.9, 0.3, 1)
+
+[node name="DinosaurBones" type="ColorRect" parent="."]
+offset_left = 400.0
+offset_top = 220.0
+offset_right = 520.0
+offset_bottom = 280.0
+color = Color(0.9, 0.85, 0.8, 1)
+
+[node name="Label" type="Label" parent="DinosaurBones"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 20.0
+offset_right = 110.0
+offset_bottom = 46.0
+text = "恐竜の骨"
+
+[node name="House" type="ColorRect" parent="."]
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 150.0
+offset_bottom = 200.0
+color = Color(0.5, 0.35, 0.25, 1)
+
+[node name="Label" type="Label" parent="House"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 70.0
+offset_bottom = 66.0
+text = "家"
+
+[node name="HouseDoor" type="Area2D" parent="House"]
+position = Vector2(50, 110)
+
+[node name="Visual" type="ColorRect" parent="House/HouseDoor"]
+offset_left = -20.0
+offset_top = -10.0
+offset_right = 20.0
+offset_bottom = 10.0
+color = Color(0.3, 0.2, 0.15, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="House/HouseDoor"]
+shape = SubResource("CircleShape2D_item")
+
+[node name="SeedItem" type="Area2D" parent="."]
+position = Vector2(350, 250)
+script = ExtResource("4_item")
+ItemName = "種"
+PickupMessage = "を見つけた"
+
+[node name="Visual" type="ColorRect" parent="SeedItem"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.4, 0.3, 0.1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeedItem"]
+shape = SubResource("CircleShape2D_item")
+
+[node name="PromptLabel" type="Label" parent="SeedItem"]
+visible = false
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+horizontal_alignment = 1
+text = "拾う"
+
+[node name="PlantSpot" type="Area2D" parent="."]
+position = Vector2(280, 300)
+script = ExtResource("5_plant")
+InteractionPrompt = "調べる"
+
+[node name="Visual" type="ColorRect" parent="PlantSpot"]
+offset_left = -16.0
+offset_top = -8.0
+offset_right = 16.0
+offset_bottom = 8.0
+color = Color(0.4, 0.3, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlantSpot"]
+shape = SubResource("CircleShape2D_item")
+
+[node name="PromptLabel" type="Label" parent="PlantSpot"]
+visible = false
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+horizontal_alignment = 1
+text = "調べる"
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(200, 250)
+
+[node name="DialogSystem" parent="." instance=ExtResource("3_dialog")]
+
+[node name="OverlayLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="WhiteOverlay" type="ColorRect" parent="OverlayLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="body_entered" from="House/HouseDoor" to="." method="OnHouseDoorInteracted"]
