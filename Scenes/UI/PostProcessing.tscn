@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://chrck5yinvjye"]
+
+[ext_resource type="Shader" path="res://Shaders/DreamPostProcess.gdshader" id="1_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("1_shader")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_softness = 0.5
+shader_parameter/desaturation = 0.3
+shader_parameter/bloom_intensity = 0.15
+shader_parameter/aberration = 0.002
+shader_parameter/breathing_speed = 0.5
+shader_parameter/breathing_intensity = 0.05
+shader_parameter/tint_color = Vector3(0.95, 0.92, 1.0)
+shader_parameter/time_offset = 0.0
+
+[node name="PostProcessing" type="CanvasLayer"]
+layer = 128
+
+[node name="Effect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2

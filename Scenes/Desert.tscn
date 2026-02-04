@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqx8rm5vjkqwh"]
+[gd_scene load_steps=8 format=3 uid="uid://dqx8rm5vjkqwh"]
 
 [ext_resource type="Script" path="res://Scripts/Game/DesertScene.cs" id="1_desert"]
 [ext_resource type="PackedScene" uid="uid://c7vjx8hk5mwab" path="res://Scenes/Player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://d3jxf5r8hjfvt" path="res://Scenes/UI/DialogSystem.tscn" id="3_dialog"]
 [ext_resource type="Script" path="res://Scripts/Interactables/ItemPickup.cs" id="4_item"]
 [ext_resource type="Script" path="res://Scripts/Interactables/PlantSpot.cs" id="5_plant"]
+[ext_resource type="PackedScene" uid="uid://postprocessing001" path="res://Scenes/UI/PostProcessing.tscn" id="6_postprocess"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_item"]
 radius = 16.0
@@ -132,5 +133,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
+
+[node name="PostProcessing" parent="." instance=ExtResource("6_postprocess")]
 
 [connection signal="body_entered" from="House/HouseDoor" to="." method="OnHouseDoorInteracted"]

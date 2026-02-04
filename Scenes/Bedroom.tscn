@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkq7ym5hxwc8r"]
+[gd_scene load_steps=12 format=3 uid="uid://bkq7ym5hxwc8r"]
 
 [ext_resource type="Script" path="res://Scripts/Game/BedroomScene.cs" id="1_bedroom"]
 [ext_resource type="PackedScene" uid="uid://c7vjx8hk5mwab" path="res://Scenes/Player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://d3jxf5r8hjfvt" path="res://Scenes/UI/DialogSystem.tscn" id="3_dialog"]
 [ext_resource type="Script" path="res://Scripts/Interactables/ItemPickup.cs" id="4_item"]
+[ext_resource type="PackedScene" uid="uid://postprocessing001" path="res://Scenes/UI/PostProcessing.tscn" id="5_postprocess"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(640, 16)
@@ -125,5 +126,7 @@ shape = SubResource("RectangleShape2D_door")
 position = Vector2(320, 180)
 
 [node name="DialogSystem" parent="." instance=ExtResource("3_dialog")]
+
+[node name="PostProcessing" parent="." instance=ExtResource("5_postprocess")]
 
 [connection signal="body_entered" from="Door" to="." method="OnDoorInteracted"]
